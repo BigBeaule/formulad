@@ -1,0 +1,136 @@
+{
+  "vassalVersion": "3.4.0",
+  "moduleVersion": "2.2.1",
+  "description": "by bggames01 (http://bggames01.blogspot.com/) and BigBeaule (https://github.com/BigBeaule)",
+  "dashboardVersion": 2,
+  "teams": [
+    {
+      "id": "Red",
+      "menuImage": "Scuderia_Rossa.png",
+      "dashboardImage": "dash-red.png",
+      "carAsset": "Vettura_Rossa.png",
+      "trailLine": {
+        "r": 255,
+        "g": 0,
+        "b": 0
+      },
+      "trailStop": {
+        "r": 255,
+        "g": 255,
+        "b": 255
+      }
+    },
+    {
+      "id": "Yellow",
+      "menuImage": "Scuderia_Gialla.png",
+      "dashboardImage": "dash-yellow.png",
+      "carAsset": "Vettura_Gialla.png",
+      "trailLine": {
+        "r": 255,
+        "g": 255,
+        "b": 0
+      },
+      "trailStop": {
+        "r": 255,
+        "g": 255,
+        "b": 255
+      }
+    },
+    {
+      "id": "Blue",
+      "menuImage": "Scuderia_Blu.png",
+      "dashboardImage": "dash-blue.png",
+      "carAsset": "Vettura_Blu.png",
+      "trailLine": {
+        "r": 0,
+        "g": 0,
+        "b": 255
+      },
+      "trailStop": {
+        "r": 255,
+        "g": 255,
+        "b": 255
+      }
+    },
+    {
+      "id": "Green",
+      "menuImage": "Scuderia_Verde.png",
+      "dashboardImage": "dash-green.png",
+      "carAsset": "Vettura_Verde.png",
+      "trailLine": {
+        "r": 0,
+        "g": 204,
+        "b": 0
+      },
+      "trailStop": {
+        "r": 255,
+        "g": 255,
+        "b": 255
+      }
+    },
+    {
+      "id": "Orange",
+      "menuImage": "Scuderia_Arancio.png",
+      "dashboardImage": "dash-orange.png",
+      "carAsset": "Vettura_Arancio.png",
+      "trailLine": {
+        "r": 255,
+        "g": 153,
+        "b": 0
+      },
+      "trailStop": {
+        "r": 255,
+        "g": 255,
+        "b": 255
+      }
+    },
+    {
+      "id": "Purple",
+      "menuImage": "Scuderia_Viola.png",
+      "dashboardImage": "dash-purple.png",
+      "carAsset": "Vettura_Viola.png",
+      "trailLine": {
+        "r": 204,
+        "g": 0,
+        "b": 204
+      },
+      "trailStop": {
+        "r": 255,
+        "g": 255,
+        "b": 255
+      }
+    },
+    {
+      "id": "Teal",
+      "menuImage": "Scuderia_Teal.png",
+      "dashboardImage": "dash-teal.png",
+      "carAsset": "Vettura_Teal.png",
+      "trailLine": {
+        "r": 0,
+        "g": 204,
+        "b": 204
+      },
+      "trailStop": {
+        "r": 255,
+        "g": 255,
+        "b": 255
+      }
+    },
+    {
+      "id": "White",
+      "menuImage": "Scuderia_Blanco.png",
+      "dashboardImage": "dash-white.png",
+      "carAsset": "Vettura_Blanco.png",
+      "trailLine": {
+        "r": 255,
+        "g": 255,
+        "b": 255
+      },
+      "trailStop": {
+        "r": 204,
+        "g": 204,
+        "b": 204
+      }
+    }
+  ]
+}
