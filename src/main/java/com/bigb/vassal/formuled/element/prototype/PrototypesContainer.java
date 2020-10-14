@@ -1,11 +1,11 @@
 package com.bigb.vassal.formuled.element.prototype;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.bigb.vassal.formuled.element.BaseElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 
@@ -16,7 +16,7 @@ public abstract class PrototypesContainer extends BaseElement {
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = MODULE + "PrototypeDefinition")
     private final List<PrototypeDefinition> prototypes;
-    
+
     /**
      * 
      */

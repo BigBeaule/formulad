@@ -70,8 +70,8 @@ public class ModuleBuild extends ConfigurableElement {
     private final PieceWindow pieceWindow = new PieceWindow(settings);
 
     @JacksonXmlProperty(localName = PrototypesContainer.NAME)
-    private final PrototypesContainer prototypes =
-            settings.getDashboardVersion() == 1 ? new PrototypesContainerV1() : new PrototypesContainerV2();
+    private final PrototypesContainer prototypes = settings.getDashboardVersion() == 1 ? new PrototypesContainerV1()
+            : new PrototypesContainerV2();
 
     @JacksonXmlProperty(localName = GamePieceImageDefinitions.NAME)
     private final GamePieceImageDefinitions gamePieceDefs = new GamePieceImageDefinitions();
@@ -105,7 +105,7 @@ public class ModuleBuild extends ConfigurableElement {
         dices.add(getGearDie(4, 12, HotKey.F4));
         dices.add(getGearDie(5, 20, HotKey.F5));
         dices.add(getGearDie(6, 30, HotKey.F6));
-        dices.add(new SpecialDiceButton(DICE_ROLL_MSG, HotKey.F7, StringUtils.EMPTY, "d20", true, true, false,
+        dices.add(new SpecialDiceButton(getDiceRollMsg(D20), HotKey.F7, StringUtils.EMPTY, "d20", true, true, false,
                 StringUtils.EMPTY, "d20", Variable.NAME, 50, 50, getDie(20, D20)));
 
         String players = roster.getEntry().stream().collect(Collectors.joining(","));
@@ -124,54 +124,58 @@ public class ModuleBuild extends ConfigurableElement {
         }
     }
 
-    private static final String DICE_ROLL_MSG =
-            "<" + Variable.PLAYER + "> rolls " + Variable.NAME + " = [" + Variable.RESULT_1 + "]";
-
     private static SpecialDiceButton getGearDie(int gear, int nbFaces, HotKey hotKey) {
         String digitSuffix = null;
         switch (gear) {
-            case 1:
-                digitSuffix = "st";
-                break;
-            case 2:
-                digitSuffix = "nd";
-                break;
-            case 3:
-                digitSuffix = "rd";
-                break;
-            default:
-                digitSuffix = "th";
-                break;
+        case 1:
+            digitSuffix = "st";
+            break;
+        case 2:
+            digitSuffix = "nd";
+            break;
+        case 3:
+            digitSuffix = "rd";
+            break;
+        default:
+            digitSuffix = "th";
+            break;
         }
 
         int[] die = GEAR_DICES[gear - 1];
         String diceName = gear + digitSuffix + " Gear";
 
-        return new SpecialDiceButton(DICE_ROLL_MSG, hotKey, StringUtils.EMPTY, diceName, true, true, false,
+        return new SpecialDiceButton(getDiceRollMsg(die), hotKey, StringUtils.EMPTY, diceName, true, true, false,
                 StringUtils.EMPTY, diceName, Variable.NAME, 50, 50, getDie(nbFaces, die));
     }
 
-    private static SpecialDie getDie(int nbFaces, int[] die) {
+    private static String getDiceRollMsg(int[] die) {
+        return PLAYER_CHAT + "rolls " + Variable.NAME + " = <img src=\"" + getDieImage(die, Variable.RESULT_1)
+                + "\" width=\"16\" height=\"16\"/>";
+    }
+
+    private static String getDieImage(int[] die, Object index) {
         int firstValue = die[0];
         int lastValue = die[die.length - 1];
+        return "Dado_" + firstValue + "-" + lastValue + "_" + index + ".png";
+    }
 
+    private static SpecialDie getDie(int nbFaces, int[] die) {
         List<SpecialDieFace> faces = new ArrayList<>(die.length);
         for (int i = 0; i < die.length; i++) {
-            faces.add(new SpecialDieFace("Dado_" + firstValue + "-" + lastValue + "_" + die[i] + ".png",
-                    String.valueOf(i + 1), String.valueOf(die[i])));
+            faces.add(new SpecialDieFace(getDieImage(die, die[i]), String.valueOf(i + 1), String.valueOf(die[i])));
         }
 
         return new SpecialDie(Variable.NUM_VALUE.getVar(), "d" + nbFaces, faces);
     }
 
     private static final int[][] GEAR_DICES = { //
-            {1, 2}, // 1st Gear
-            {2, 3, 3, 4, 4, 4}, // 2nd Gear
-            {4, 5, 6, 6, 7, 7, 8, 8}, // 3rd Gear
-            {7, 8, 9, 10, 11, 12}, // 4th Gear
-            {11, 12, 13, 14, 15, 16, 17, 18, 19, 20}, // 5th Gear
-            {21, 22, 23, 24, 25, 26, 27, 28, 29, 30} // 6th Gear
+            { 1, 2 }, // 1st Gear
+            { 2, 3, 3, 4, 4, 4 }, // 2nd Gear
+            { 4, 5, 6, 6, 7, 7, 8, 8 }, // 3rd Gear
+            { 7, 8, 9, 10, 11, 12 }, // 4th Gear
+            { 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 }, // 5th Gear
+            { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 } // 6th Gear
     };
 
-    private static final int[] D20 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
+    private static final int[] D20 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
 }

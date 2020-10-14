@@ -10,6 +10,8 @@ import java.util.List;
  * 
  */
 public class Panel extends BaseElement {
+    public static final String NAME = WIDGET + "PanelWidget";
+    
     @JacksonXmlProperty(isAttribute = true)
     private final String entryName;
     
@@ -23,7 +25,7 @@ public class Panel extends BaseElement {
     private final boolean vert;
     
     @JacksonXmlElementWrapper(useWrapping = false)
-    @JacksonXmlProperty(localName = WIDGET + "PieceSlot")
+    @JacksonXmlProperty(localName = PieceSlot.NAME)
     private final List<PieceSlot> pieces;
 
     public Panel(String entryName, int nbColumns, boolean fixed, boolean vertical, List<PieceSlot> pieces) {

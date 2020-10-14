@@ -9,6 +9,8 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText;
  * 
  */
 public class PieceSlot extends BaseElement {
+    public static final String NAME = WIDGET + "PieceSlot";
+    
     @JacksonXmlProperty(isAttribute = true)
     private final String entryName;
     
@@ -31,6 +33,4 @@ public class PieceSlot extends BaseElement {
         this.traits = traits;
         this.gpid = traits.getUniqueId();
     }
-    
-    
 }

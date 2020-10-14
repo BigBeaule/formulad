@@ -11,10 +11,10 @@ import com.bigb.vassal.formuled.element.enums.Variable;
 /**
  * 
  */
-public class DynamicProperty extends AbstractTrait {
+public class DynamicProp extends AbstractTrait {
     private final Object value;
 
-    public DynamicProperty(Variable name, int value, int minValue, int maxValue, boolean wrap,
+    public DynamicProp(Variable name, int value, int minValue, int maxValue, boolean wrap,
             DynamicPropertyTrigger... triggers) {
 
         super("PROP", name.getVarName(), internalTraitParams(true, minValue, maxValue, wrap),
@@ -23,7 +23,7 @@ public class DynamicProperty extends AbstractTrait {
         this.value = value;
     }
 
-    public DynamicProperty(Variable name, DynamicPropertyTrigger... triggers) {
+    public DynamicProp(Variable name, DynamicPropertyTrigger... triggers) {
         super("PROP", name.getVarName(), internalTraitParams(false, null, null, false), internalTraitParams(triggers));
         this.value = null;
     }

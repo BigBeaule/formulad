@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
  */
 @JsonInclude(Include.NON_NULL)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class EmptyElement {
+public class EmptyElement extends BaseElement {
     public static final EmptyElement ELEMENT = new EmptyElement();
 }

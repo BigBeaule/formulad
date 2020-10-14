@@ -29,6 +29,7 @@ public class VassalBuilder {
 		xml.enable(SerializationFeature.INDENT_OUTPUT);
 		xml.enable(ToXmlGenerator.Feature.WRITE_XML_DECLARATION);
 
+        System.out.println("Reading configuration...");
 		JsonMapper json = new JsonMapper();
 		Settings settings = json.readValue(new File("configuration.json"), Settings.class);
 
@@ -36,19 +37,23 @@ public class VassalBuilder {
 		File moduleData = new File("assets/moduledata");
 
 		try {
+	        System.out.println("Creating build file...");
 			try (FileWriter writer = new FileWriter(buildFile)) {
 				xml.writeValue(writer, new ModuleBuild(settings));
 			}
 
+            System.out.println("Creating data file...");
 			try (FileWriter writer = new FileWriter(moduleData)) {
 				xml.writeValue(writer, new ModuleData(settings));
 			}
 
 			if (KEEP_XML) {
+	            System.out.println("Keeping a copy of XML files!");
 				FileUtils.copyFile(buildFile, new File(buildFile.getName() + ".xml"));
 				FileUtils.copyFile(moduleData, new File(moduleData.getName() + ".xml"));
 			}
 
+            System.out.println("Creating the module file...");
 			try (FileOutputStream fos = new FileOutputStream("FormulaDe-" + settings.getModuleVersion() + ".vmod");
 					ZipOutputStream zip = new ZipOutputStream(fos)) {
 
@@ -58,6 +63,8 @@ public class VassalBuilder {
 					zipFile(zip, baseUri, file);
 				}
 			}
+			
+            System.out.println("All done!");
 		} finally {
 			FileUtils.deleteQuietly(buildFile);
 			FileUtils.deleteQuietly(moduleData);

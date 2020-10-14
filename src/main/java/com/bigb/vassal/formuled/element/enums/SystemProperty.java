@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
  */
 @RequiredArgsConstructor
 public enum SystemProperty implements ExpressionVariable {
+    BASIC_PIECE("BasicName"), // $%&*#@^$*(&@
     FULL_PIECE("PieceName"), // $%&*#@^$*(&@
     MAP_PIECE("pieceName"), // $%&*#@^$*(&@
     LOCATION("LocationName"), //

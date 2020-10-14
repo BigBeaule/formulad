@@ -29,6 +29,9 @@ public class GlobalOptions extends BaseElement {
     private final Variable playerIdFormat = Variable.PLAYER;
 
     @JacksonXmlProperty(isAttribute = true)
+    private final OptionState chatterHTMLSupport = OptionState.ALWAYS;
+
+    @JacksonXmlProperty(isAttribute = true)
     private final String promptString = "Opponents can unmask my pieces";
 
     @JacksonXmlElementWrapper(useWrapping = false)

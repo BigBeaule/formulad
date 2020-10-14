@@ -3,6 +3,8 @@ package com.bigb.vassal.formuled.element;
 import com.bigb.vassal.formuled.element.enums.Variable;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
+import java.util.Arrays;
+
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -39,7 +41,7 @@ public class TurnTracker extends BaseElement {
     private final HotKey prevhotkey = HotKey.NONE;
 
     @JacksonXmlProperty(isAttribute = true)
-    private final String reportFormat = "* <" + Variable.PLAYER_ID + "> Weather Updated from "
+    private final String reportFormat = "<b>" + Variable.PLAYER_ID + "</b> weather Updated from "
             + Variable.TURN.getOldVar() + " to " + Variable.TURN.getNewVar();
 
     @JacksonXmlProperty(isAttribute = true)
@@ -59,13 +61,15 @@ public class TurnTracker extends BaseElement {
         private final boolean configList = false;
 
         @JacksonXmlProperty(isAttribute = true)
-        private final String list = "Sunshine,Changeable,Rain";
+        private final String list = StringUtils.join(
+                Arrays.asList(Variable.SUNNY.getVarName(), Variable.CLOUDY.getVarName(), Variable.RAINY.getVarName()),
+                ',');
 
         @JacksonXmlProperty(isAttribute = true)
         private final String name = "Weather";
 
         @JacksonXmlProperty(isAttribute = true)
-        private final String property = "Weather";
+        private final String property = Variable.WEATHER.getVarName();
 
         @JacksonXmlProperty(isAttribute = true)
         private final String turnFormat = "$value$";

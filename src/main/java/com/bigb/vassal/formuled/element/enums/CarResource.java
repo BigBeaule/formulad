@@ -1,6 +1,10 @@
 package com.bigb.vassal.formuled.element.enums;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.EnumSet;
+import java.util.List;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +28,6 @@ public enum CarResource {
         return getType();
     }
 
-    public static final EnumSet<CarResource> CAR_RESOURCE_V1 = EnumSet.allOf(CarResource.class);
-    public static final EnumSet<CarResource> CAR_RESOURCE_V2 = EnumSet.of(FUEL, BRAKE, ENGINE, BODY, HOLDING, TIRE);
+    public static final Collection<CarResource> CAR_RESOURCE_V1 = EnumSet.allOf(CarResource.class);
+    public static final List<CarResource> CAR_RESOURCE_V2 = Arrays.asList(FUEL, BRAKE, ENGINE, BODY, HOLDING, TIRE);
 }

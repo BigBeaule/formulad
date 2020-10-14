@@ -31,7 +31,14 @@ public enum Variable implements ExpressionVariable {
     DISABLED("disabled"), //
 
     MESSAGE("message"), //
-    POSITION("position"); //
+    POSITION("position"), //
+    
+    WEATHER("weather"), //
+    SUNNY("Sunshine"), //
+    CLOUDY("Changeable"), //
+    RAINY("Rain"), //
+    
+    D20("d20_result");
     
     private final String var;
     

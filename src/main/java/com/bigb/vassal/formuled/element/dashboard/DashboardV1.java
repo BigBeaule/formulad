@@ -14,7 +14,7 @@ import com.bigb.vassal.formuled.element.enums.Variable;
  */
 public class DashboardV1 extends AbstractDashboard {
     public DashboardV1(String name, String icon, String players, Team team, int carNumber) {
-        super(name, icon, players, team, carNumber, 3);
+        super(name, icon, players, team, carNumber, 3, r -> 9);
 
         widgets.add(getInputBox(Variable.TEAM, "Team", 233, 70));
         widgets.add(getInputBox(Variable.DRIVER, "Driver", 538, 70));
@@ -39,7 +39,7 @@ public class DashboardV1 extends AbstractDashboard {
             widgets.add(getCarResourceSetup(resource, team, carNumber, resourceOrdinal));
 
             final int ro = resourceOrdinal++;
-            IntStream.range(1, 10).forEach(index -> widgets.add(getCarResource(resource, index, ro)));
+            IntStream.range(1, 10).forEach(index -> widgets.add(getCarResource(resource, team, carNumber, index, ro)));
         }
 
         widgets.add(getRepair(1));
@@ -58,8 +58,8 @@ public class DashboardV1 extends AbstractDashboard {
         return getPitStop(lap, 1092, 320 + (lap * 58));
     }
 
-    private SetupStack getCarResource(CarResource resource, int index, int resourceOrdinal) {
-        return getCarResource(resource, index, 141 + (index * 52), 342 + (resourceOrdinal * 58));
+    private SetupStack getCarResource(CarResource resource, Team team, int carNumber, int index, int resourceOrdinal) {
+        return getCarResource(resource, team, carNumber, index, 141 + (index * 52), 342 + (resourceOrdinal * 58));
     }
 
     private SetupStack getCarResourceSetup(CarResource resource, Team team, int carNumber, int resourceOrdinal) {

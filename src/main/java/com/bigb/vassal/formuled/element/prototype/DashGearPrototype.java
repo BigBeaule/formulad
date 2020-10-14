@@ -10,12 +10,12 @@ import com.bigb.vassal.formuled.element.enums.Prototype;
 import com.bigb.vassal.formuled.element.enums.SystemProperty;
 import com.bigb.vassal.formuled.element.enums.Variable;
 import com.bigb.vassal.formuled.element.trait.Button;
-import com.bigb.vassal.formuled.element.trait.DynamicProperty;
+import com.bigb.vassal.formuled.element.trait.DynamicProp;
 import com.bigb.vassal.formuled.element.trait.GlobalKey;
 import com.bigb.vassal.formuled.element.trait.Marker;
 import com.bigb.vassal.formuled.element.trait.NoStack;
 import com.bigb.vassal.formuled.element.trait.Traits;
-import com.bigb.vassal.formuled.element.trait.DynamicProperty.DynamicPropertyTrigger;
+import com.bigb.vassal.formuled.element.trait.DynamicProp.DynamicPropertyTrigger;
 import com.bigb.vassal.formuled.element.trait.Layer.LayerBuilder;
 
 import lombok.AccessLevel;
@@ -52,7 +52,7 @@ class DashGearPrototype extends AbstractGearPrototype {
         traits.addTrait(getGearButton(1, gearsPosition));
         traits.addTrait(getGearButton(0, gearsPosition));
         traits.addTrait(new NoStack(NoStackType.NEVER_NORMALLY_NEVER));
-        traits.addTrait(new DynamicProperty(Variable.GEAR, 1, 0, 6, false, getGearTrigger(0), getGearTrigger(1),
+        traits.addTrait(new DynamicProp(Variable.GEAR, 1, 0, 6, false, getGearTrigger(0), getGearTrigger(1),
                 getGearTrigger(2), getGearTrigger(3), getGearTrigger(4), getGearTrigger(5), getGearTrigger(6),
                 new DynamicPropertyTrigger(null, CustomHotKey.INCREASE_GEAR, DynPropTriggerType.INCREMENT, 1),
                 new DynamicPropertyTrigger(null, CustomHotKey.DECREASE_GEAR, DynPropTriggerType.INCREMENT, -1)));
@@ -80,6 +80,7 @@ class DashGearPrototype extends AbstractGearPrototype {
         return new Button("Gear " + gear, gearKey, pos[0], pos[1], pos[2], pos[3]);
     }
 
+    // Width, Height, xOffset, yOffset
     private static final int[][] DASH_V1_GEAR_POS = { //
             {0, 118, -582, -59}, //
             {50, 118, -532, -59}, //
@@ -90,13 +91,14 @@ class DashGearPrototype extends AbstractGearPrototype {
             {180, 118, 368, -59} //
     };
 
+    // Width, Height, xOffset, yOffset
     private static final int[][] DASH_V2_GEAR_POS = { //
-            {22, 20, 9, 178}, //
-            {80, 76, -100, 148}, //
-            {69, 70, 49, 80}, //
-            {98, 92, -112, -31}, //
-            {84, 78, 44, -112}, //
-            {86, 70, -112, -191}, //
-            {85, 74, 44, -249} //
+            {22, 20, 9, 180}, //
+            {80, 76, -114, 145}, //
+            {69, 70, 50, 65}, //
+            {98, 92, -122, -25}, //
+            {84, 78, 45, -95}, //
+            {86, 70, -111, -175}, //
+            {85, 74, 44, -250} //
     };
 }

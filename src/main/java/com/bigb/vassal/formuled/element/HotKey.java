@@ -24,10 +24,14 @@ public class HotKey {
     }
 
     public static final HotKey NONE = new HotKey();
+    public static final HotKey CTRL_1 = new HotKey(49, 130);
+    public static final HotKey CTRL_2 = new HotKey(50, 130);
+    public static final HotKey CTRL_3 = new HotKey(51, 130);
     public static final HotKey CTRL_A = new HotKey(65, 130);
     public static final HotKey CTRL_B = new HotKey(66, 130);
     public static final HotKey CTRL_C = new HotKey(67, 130);
     public static final HotKey CTRL_D = new HotKey(68, 130);
+    public static final HotKey CTRL_E = new HotKey(69, 130);
     public static final HotKey CTRL_Q = new HotKey(81, 130);
     public static final HotKey CTRL_R = new HotKey(82, 130);
     public static final HotKey CTRL_S = new HotKey(83, 130);

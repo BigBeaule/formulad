@@ -1,6 +1,7 @@
 package com.bigb.vassal.formuled.element.prototype;
 
 import com.bigb.vassal.formuled.configuration.Color;
+import com.bigb.vassal.formuled.element.BaseElement;
 import com.bigb.vassal.formuled.element.CustomHotKey;
 import com.bigb.vassal.formuled.element.Expression;
 import com.bigb.vassal.formuled.element.HotKey;
@@ -12,14 +13,15 @@ import com.bigb.vassal.formuled.element.enums.Position;
 import com.bigb.vassal.formuled.element.enums.Prototype;
 import com.bigb.vassal.formuled.element.enums.SystemProperty;
 import com.bigb.vassal.formuled.element.enums.Variable;
-import com.bigb.vassal.formuled.element.trait.DynamicProperty;
+import com.bigb.vassal.formuled.element.trait.DynamicProp;
+import com.bigb.vassal.formuled.element.trait.DynamicProp.DynamicPropertyTrigger;
 import com.bigb.vassal.formuled.element.trait.GlobalKey;
+import com.bigb.vassal.formuled.element.trait.GlobalProp;
 import com.bigb.vassal.formuled.element.trait.Label;
 import com.bigb.vassal.formuled.element.trait.NoStack;
 import com.bigb.vassal.formuled.element.trait.Report;
 import com.bigb.vassal.formuled.element.trait.Restrict;
 import com.bigb.vassal.formuled.element.trait.Traits;
-import com.bigb.vassal.formuled.element.trait.DynamicProperty.DynamicPropertyTrigger;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -35,21 +37,27 @@ class SetupBoxPrototype {
                 + Variable.INDEX.getVarName() + "=" + setup + " && " + Variable.BOX.getVarName() + "=" + Variable.BOX);
 
         Traits traits = new Traits();
-        traits.addTrait(
-                new Restrict(Command.DISABLE, "Setup", new Expression(setup.getVarName() + "=" + 0), HotKey.CTRL_Z));
+        traits.addTrait(new Restrict(Command.DISABLE, "Restrict Disable", new Expression(setup.getVarName() + "=" + 0),
+                HotKey.CTRL_Z));
 
-        traits.addTrait(
-                new Restrict(Command.DISABLE, "Setup", new Expression(setup.getVarName() + "=" + max), HotKey.CTRL_A));
+        traits.addTrait(new Restrict(Command.DISABLE, "Restrict Enable", new Expression(setup.getVarName() + "=" + max),
+                HotKey.CTRL_A));
 
-        traits.addTrait(new GlobalKey("Set Setup", null, HotKey.CTRL_Z, CustomHotKey.DISABLE, setSetup));
+        traits.addTrait(new GlobalKey("Set Setup Disable", null, HotKey.CTRL_Z, CustomHotKey.DISABLE, setSetup));
 
-        traits.addTrait(new DynamicProperty(setup, max, 0, max, false,
+        traits.addTrait(new DynamicProp(setup, max, 0, max, false,
                 new DynamicPropertyTrigger("Increase", HotKey.CTRL_A, DynPropTriggerType.INCREMENT, 1),
                 new DynamicPropertyTrigger("Decrease", HotKey.CTRL_Z, DynPropTriggerType.INCREMENT, -1)));
 
-        traits.addTrait(new GlobalKey("Set Setup", null, HotKey.CTRL_A, CustomHotKey.ENABLE, setSetup));
+        traits.addTrait(
+                new GlobalProp("Set Global Setup", new Expression("\"setup\" + " + Variable.BOX.getVarName(), true),
+                        new Expression(Variable.CAR.getVarName(), true), 0, max, //
+                        new DynamicPropertyTrigger(null, HotKey.CTRL_A, DynPropTriggerType.SET_VALUE, Variable.SETUP),
+                        new DynamicPropertyTrigger(null, HotKey.CTRL_Z, DynPropTriggerType.SET_VALUE, Variable.SETUP)));
 
-        traits.addTrait(new Report("<" + Variable.PLAYER + "> changes setup of " + Variable.BOX + " on " //
+        traits.addTrait(new GlobalKey("Set Setup Enable", null, HotKey.CTRL_A, CustomHotKey.ENABLE, setSetup));
+
+        traits.addTrait(new Report(BaseElement.PLAYER_CHAT + " changes setup of " + Variable.BOX + " on " //
                 + SystemProperty.CURRENT_MAP + " to " + setup + " from " + setup.getOldVar(), HotKey.CTRL_A,
                 HotKey.CTRL_Z));
 

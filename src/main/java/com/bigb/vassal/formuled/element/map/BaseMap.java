@@ -3,6 +3,7 @@ package com.bigb.vassal.formuled.element.map;
 import com.bigb.vassal.formuled.configuration.Color;
 import com.bigb.vassal.formuled.element.BaseElement;
 import com.bigb.vassal.formuled.element.EmptyElement;
+import com.bigb.vassal.formuled.element.GlobalProperties;
 import com.bigb.vassal.formuled.element.HotKey;
 import com.bigb.vassal.formuled.element.enums.OptionState;
 import com.bigb.vassal.formuled.element.enums.Variable;
@@ -116,8 +117,8 @@ public abstract class BaseMap extends BaseElement {
     @JacksonXmlProperty(localName = MAP_PREFIX + "CounterDetailViewer")
     private final CounterDetailViewer viewer;
 
-    @JacksonXmlProperty(localName = MODULE + "properties.GlobalProperties")
-    private final EmptyElement globalProps = EmptyElement.ELEMENT;
+    @JacksonXmlProperty(localName = GlobalProperties.NAME)
+    private final GlobalProperties globalProps;
 
     @JacksonXmlProperty(localName = MAP_PREFIX + "SelectionHighlighters")
     private final EmptyElement selectionHighlighters = EmptyElement.ELEMENT;

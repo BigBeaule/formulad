@@ -3,7 +3,7 @@ package com.bigb.vassal.formuled.element.prototype;
 import com.bigb.vassal.formuled.element.BaseElement;
 import com.bigb.vassal.formuled.element.CustomHotKey;
 import com.bigb.vassal.formuled.element.enums.DynPropTriggerType;
-import com.bigb.vassal.formuled.element.trait.DynamicProperty.DynamicPropertyTrigger;
+import com.bigb.vassal.formuled.element.trait.DynamicProp.DynamicPropertyTrigger;
 
 /**
  * 

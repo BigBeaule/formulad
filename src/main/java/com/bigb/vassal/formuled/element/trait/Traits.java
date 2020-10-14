@@ -1,10 +1,16 @@
 package com.bigb.vassal.formuled.element.trait;
 
-import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * 
@@ -42,9 +48,12 @@ public class Traits {
         return "+/null/" + //
                 firstTrait.startExport(0) + //
                 Trait.SEP + //
-                exportOptions("piece", null, null, StringUtils.defaultString(pieceImage),
-                        StringUtils.defaultString(pieceName) + '/'
-                                + Objects.toString(firstTrait.getClosingValue(), StringUtils.EMPTY))
+                StringUtils.join( //
+                        Arrays.asList( //
+                                "piece", null, null, StringUtils.defaultString(pieceImage),
+                                StringUtils.defaultString(pieceName) + '/'
+                                        + Objects.toString(firstTrait.getClosingValue(), StringUtils.EMPTY)),
+                        ';')
                 + firstTrait.endExport(0) + //
                 Trait.SEP + //
                 exportOptions("null", 0, 0, uniqueId);
@@ -56,6 +65,12 @@ public class Traits {
     }
 
     static String exportOptions(Object... options) {
-        return StringUtils.join(options, ';');
+        return Stream.of(options).map(o -> {
+            if (o == null) {
+                return StringUtils.EMPTY;
+            }
+
+            return StringUtils.replace(StringUtils.replace(o.toString(), "/", "\\/"), ";", "\\;");
+        }).collect(Collectors.joining(";"));
     }
 }

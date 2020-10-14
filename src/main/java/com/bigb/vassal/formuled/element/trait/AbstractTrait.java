@@ -75,6 +75,10 @@ public abstract class AbstractTrait implements Trait {
 
         @Override
         public String toString() {
+            if (parameters == null) {
+                return StringUtils.EMPTY;
+            }
+            
             return parameters.stream().map(p -> p == null ? null : StringUtils.replace(p.toString(), ",", "\\,"))
                     .collect(Collectors.joining(","));
         }
