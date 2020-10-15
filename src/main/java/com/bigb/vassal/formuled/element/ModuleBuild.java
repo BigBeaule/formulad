@@ -150,7 +150,7 @@ public class ModuleBuild extends ConfigurableElement {
 
     private static String getDiceRollMsg(int[] die) {
         return PLAYER_CHAT + "rolls " + Variable.NAME + " = <img src=\"" + getDieImage(die, Variable.RESULT_1)
-                + "\" width=\"16\" height=\"16\"/>";
+                + "\" width=\"18\" height=\"18\"/>";
     }
 
     private static String getDieImage(int[] die, Object index) {

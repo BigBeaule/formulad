@@ -125,7 +125,8 @@ final class CarPrototype extends AbstractGearPrototype {
                     Arrays.asList(r.reportCommand, CustomHotKey.ROLL_D20, r.rollCommand)));
 
             traits.addTrait(new Report("Testing " + r.label,
-                    PLAYER_CHAT + "testing " + r.label + " for " + Variable.CAR, r.reportCommand));
+                    PLAYER_CHAT + "is testing " + r.label + " for " + SystemProperty.BASIC_PIECE.getVar(),
+                    r.reportCommand));
         });
 
         LayerBuilder cornerBuilder = new LayerBuilder("Corner Stops");

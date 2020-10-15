@@ -35,6 +35,9 @@ public class PrototypesContainerV2 extends PrototypesContainer {
             case SETUP_BOX_TIRES:
                 addPrototype(SetupBoxPrototype.buildPrototype(prototype, 12));
                 break;
+            case CLEAR_TIRES:
+                addPrototype(ClearTiresPrototype.buildPrototype());
+                break;
             case CHECK_ENGINE:
                 addPrototype(ResourceTestPrototype.buildPrototype(prototype, CarResource.ENGINE, 4, 3,
                         CustomHotKey.ROLL_ENGINE, CustomHotKey.LOSE_ENGINE, getNextId()));

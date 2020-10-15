@@ -17,6 +17,7 @@ import com.bigb.vassal.formuled.element.trait.Button;
 import com.bigb.vassal.formuled.element.trait.GlobalKey;
 import com.bigb.vassal.formuled.element.trait.Marker;
 import com.bigb.vassal.formuled.element.trait.NoStack;
+import com.bigb.vassal.formuled.element.trait.PrototypeRef;
 import com.bigb.vassal.formuled.element.trait.Traits;
 
 /**
@@ -49,6 +50,7 @@ public class DashboardV2 extends AbstractDashboard {
 
             switch (resource) {
             case TIRE:
+                widgets.add(getClearTiresButton(team, carNumber));
                 widgets.add(getCarResourceSetup(Prototype.SETUP_BOX_TIRES, resource, team, carNumber, 64, 125));
                 IntStream.range(0, 12).forEach(index -> widgets.add(getCarResource(resource, team, carNumber,
                         (index + 1), 65 + (index % 4 * 45), 175 + (index / 4 * 51))));
@@ -96,6 +98,14 @@ public class DashboardV2 extends AbstractDashboard {
     private SetupStack getCarResourceSetup(CarResource resource, Team team, int carNumber, int resourceOrdinal) {
         return getCarResourceSetup(Prototype.SETUP_BOX, resource, team, carNumber, 275 + (int) (resourceOrdinal * 64.5),
                 182);
+    }
+    
+    private SetupStack getClearTiresButton(Team team, int carNumber) {
+        String name = "Clear Used Tires";
+        Traits traits = new Traits(getNextId(), "clear.png", name);
+        traits.addTrait(new Marker(Variable.CAR.getVarName(), team.getId() + " " + carNumber));
+        traits.addTrait(new PrototypeRef(Prototype.CLEAR_TIRES));
+        return new SetupStack("ClearUsedTires", 201, 125, new PieceSlot(name, 0, 0, traits));
     }
 
     private SetupStack getCarResourceCheck(CustomHotKey testAction, CarResource resource, Team team, int carNumber,

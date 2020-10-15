@@ -20,6 +20,7 @@ public class CustomHotKey extends HotKey {
     public static final CustomHotKey DISABLE = new CustomHotKey("SetDisabled");
     public static final CustomHotKey INCREASE = new CustomHotKey("IncreaseBox");
     public static final CustomHotKey TOGGLE_ENABLED = new CustomHotKey("ToggleEnabled");
+    public static final CustomHotKey CLEAR_TIRES = new CustomHotKey("clearTires");
 
     public static final CustomHotKey GEAR_0 = new CustomHotKey("SetGear0");
     public static final CustomHotKey GEAR_1 = new CustomHotKey("SetGear1");

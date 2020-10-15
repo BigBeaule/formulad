@@ -7,7 +7,6 @@ import com.bigb.vassal.formuled.element.GlobalProperties;
 import com.bigb.vassal.formuled.element.HotKey;
 import com.bigb.vassal.formuled.element.enums.OptionState;
 import com.bigb.vassal.formuled.element.enums.SystemProperty;
-import com.bigb.vassal.formuled.element.enums.Variable;
 import com.bigb.vassal.formuled.element.map.BaseMap;
 import com.bigb.vassal.formuled.element.map.CounterDetailViewer;
 import com.bigb.vassal.formuled.element.map.GlobalMap;
