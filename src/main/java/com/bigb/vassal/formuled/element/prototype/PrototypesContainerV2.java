@@ -26,6 +26,9 @@ public class PrototypesContainerV2 extends PrototypesContainer {
             case DASH_BOX:
                 addPrototype(DashBoxPrototype.buildPrototypeV2());
                 break;
+            case DASH_BOX_RESOURCE:
+                addPrototype(DashBoxResourcePrototype.buildPrototype());
+                break;
             case DASH_GEARS:
                 addPrototype(DashGearPrototype.buildPrototypeV2());
                 break;

@@ -11,9 +11,11 @@ public enum Variable implements ExpressionVariable {
     BOX("box"), //
     CAR("car"), //
     IS_CAR("isCar"), //
-    STOPS("stops"), //
-    GEAR("gear"), //
     SETUP("setup"), //
+    GEAR("gear"), //
+    STOPS("stops"), //
+    CURRENT_GEAR("currentGear"), //
+    CURRENT_STOPS("currentStops"), //
     
     INDEX("n"), //
     RESULT_1("result1"), //

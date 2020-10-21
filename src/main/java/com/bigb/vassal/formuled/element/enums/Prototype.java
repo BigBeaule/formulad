@@ -16,6 +16,7 @@ public enum Prototype {
     CAR_2("Car_2"), //
     MARKER("Marker"), //
     DASH_BOX("DashBox"), //
+    DASH_BOX_RESOURCE("DashBoxResource"), //
     CLEAR_TIRES("ClearTires"), //
     DASH_GEARS("DashGears"), //
     SETUP_BOX("SetupBox"), //
@@ -35,6 +36,7 @@ public enum Prototype {
     public static final EnumSet<Prototype> PROTOTYPE_V1 = EnumSet.of(CAR, CAR_1, CAR_2, MARKER, DASH_BOX, DASH_GEARS,
             SETUP_BOX);
 
-    public static final EnumSet<Prototype> PROTOTYPE_V2 = EnumSet.of(CAR, CAR_1, CAR_2, MARKER, DASH_BOX, DASH_GEARS,
-            CLEAR_TIRES, SETUP_BOX, SETUP_BOX_TIRES, CHECK_ENGINE, CHECK_COLLISION, CHECK_HAZARD);
+    public static final EnumSet<Prototype> PROTOTYPE_V2 = EnumSet.of(CAR, CAR_1, CAR_2, MARKER, DASH_BOX,
+            DASH_BOX_RESOURCE, DASH_GEARS, CLEAR_TIRES, SETUP_BOX, SETUP_BOX_TIRES, CHECK_ENGINE, CHECK_COLLISION,
+            CHECK_HAZARD);
 }

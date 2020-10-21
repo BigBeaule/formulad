@@ -59,7 +59,8 @@ public class DashboardV1 extends AbstractDashboard {
     }
 
     private SetupStack getCarResource(CarResource resource, Team team, int carNumber, int index, int resourceOrdinal) {
-        return getCarResource(resource, team, carNumber, index, 141 + (index * 52), 342 + (resourceOrdinal * 58));
+        return getCarResource(Prototype.DASH_BOX, resource, team, carNumber, index, 141 + (index * 52),
+                342 + (resourceOrdinal * 58));
     }
 
     private SetupStack getCarResourceSetup(CarResource resource, Team team, int carNumber, int resourceOrdinal) {

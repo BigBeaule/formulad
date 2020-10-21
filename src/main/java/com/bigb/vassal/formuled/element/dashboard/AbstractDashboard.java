@@ -66,20 +66,23 @@ public abstract class AbstractDashboard extends BaseMap {
                 OptionState.NEVER, "/images/unmoved.gif", StringUtils.EMPTY, StringUtils.EMPTY,
                 new DashBoardPicker(team, carNumber), new ImageSaver("/images/camera.gif"),
                 new CounterDetailViewer(Color.BLACK, StringUtils.EMPTY),
-                getUsedResourcesProperties(globalPropsMaxValueRetriever), new Zoom("/images/zoomIn.gif", "Zoom in",
+                getGlobalProperties(globalPropsMaxValueRetriever), new Zoom("/images/zoomIn.gif", "Zoom in",
                         "/images/zoomOut.gif", "Zoom out", "/images/zoom.png", "0.390625,0.625,1.0,1.6", defaultZoom));
 
         this.tooltip = name;
         this.side = players;
     }
 
-    private static GlobalProperties getUsedResourcesProperties(Function<CarResource, Integer> maxValueRetriever) {
-        List<GlobalProperty> props = new ArrayList<>(CarResource.values().length * 2);
-        Stream.of(CarResource.values()).forEach(r -> {
+    private static GlobalProperties getGlobalProperties(Function<CarResource, Integer> maxValueRetriever) {
+        List<GlobalProperty> props = new ArrayList<>();
+        Stream.of(CarResource.ENGINE, CarResource.BODY, CarResource.HOLDING).forEach(r -> {
             int max = maxValueRetriever.apply(r);
             props.add(new GlobalProperty("used" + r.getType(), 0, max, 0, false));
             props.add(new GlobalProperty("setup" + r.getType(), 0, max, max, false));
         });
+        props.add(new GlobalProperty(Variable.CURRENT_GEAR.getVarName(), 0, 6, 0, false));
+        props.add(new GlobalProperty(Variable.CURRENT_STOPS.getVarName(), 0, 4, 0, false));
+
         props.sort((p1, p2) -> StringUtils.compare(p1.getName(), p2.getName()));
         return new GlobalProperties(props);
     }
@@ -134,13 +137,14 @@ public abstract class AbstractDashboard extends BaseMap {
         return new SetupStack("Setup" + resource, x, y, new PieceSlot(name, 0, 0, traits));
     }
 
-    protected final SetupStack getCarResource(CarResource resource, Team team, int carNumber, int index, int x, int y) {
+    protected final SetupStack getCarResource(Prototype boxPrototype, CarResource resource, Team team, int carNumber,
+            int index, int x, int y) {
         String name = resource + " " + index;
         Traits traits = new Traits(getNextId(), null, name);
         traits.addTrait(new Marker(Variable.INDEX.getVarName(), index));
         traits.addTrait(new Marker(Variable.BOX.getVarName(), resource.getType()));
         traits.addTrait(new Marker(Variable.CAR.getVarName(), team.getId() + " " + carNumber));
-        traits.addTrait(new PrototypeRef(Prototype.DASH_BOX));
+        traits.addTrait(new PrototypeRef(boxPrototype));
         return new SetupStack(resource.getType() + index, x, y, new PieceSlot(name, 0, 0, traits));
     }
 

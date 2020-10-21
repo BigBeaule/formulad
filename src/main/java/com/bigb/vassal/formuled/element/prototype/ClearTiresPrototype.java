@@ -21,7 +21,7 @@ public class ClearTiresPrototype {
         Traits traits = new Traits();
         traits.addTrait(new Button("Clear tires button", CustomHotKey.CLEAR_TIRES, 40, 40, -20, -20));
         traits.addTrait(new GlobalKey("Clear tires action", null, CustomHotKey.CLEAR_TIRES, CustomHotKey.INCREASE, //
-                new Expression(SystemProperty.CURRENT_MAP.getVarName() + "==" + Variable.CAR.getVarName() + " && " //
+                new Expression(SystemProperty.CURRENT_MAP.getVarName() + "==\"" + Variable.CAR + "\" && " //
                         + Variable.BOX.getVarName() + "==\"" + CarResource.TIRE + "\" && Box_Level==2", true),
                 true));
 

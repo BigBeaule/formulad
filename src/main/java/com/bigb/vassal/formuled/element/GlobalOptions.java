@@ -19,8 +19,9 @@ public class GlobalOptions extends BaseElement {
     @JacksonXmlProperty(isAttribute = true)
     private final OptionState autoReport = OptionState.ALWAYS;
 
-    @JacksonXmlProperty(isAttribute = true)
-    private final OptionState centerOnMove = OptionState.ALWAYS;
+//    Removed since Vassal 3.4.0
+//    @JacksonXmlProperty(isAttribute = true)
+//    private final OptionState centerOnMove = OptionState.NEVER;
 
     @JacksonXmlProperty(isAttribute = true)
     private final OptionState nonOwnerUnmaskable = OptionState.NEVER;

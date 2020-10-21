@@ -16,13 +16,16 @@ import com.bigb.vassal.formuled.element.enums.NoStackType;
 import com.bigb.vassal.formuled.element.enums.Prototype;
 import com.bigb.vassal.formuled.element.enums.SystemProperty;
 import com.bigb.vassal.formuled.element.enums.Variable;
+import com.bigb.vassal.formuled.element.trait.CalculatedProp;
 import com.bigb.vassal.formuled.element.trait.Delete;
 import com.bigb.vassal.formuled.element.trait.DynamicProp;
 import com.bigb.vassal.formuled.element.trait.DynamicProp.DynamicPropertyTrigger;
 import com.bigb.vassal.formuled.element.trait.GlobalHotKey;
 import com.bigb.vassal.formuled.element.trait.GlobalKey;
+import com.bigb.vassal.formuled.element.trait.GlobalProp;
 import com.bigb.vassal.formuled.element.trait.Layer.LayerBuilder;
 import com.bigb.vassal.formuled.element.trait.Marker;
+import com.bigb.vassal.formuled.element.trait.MenuSeparator;
 import com.bigb.vassal.formuled.element.trait.NoStack;
 import com.bigb.vassal.formuled.element.trait.PrototypeRef;
 import com.bigb.vassal.formuled.element.trait.Report;
@@ -41,9 +44,36 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 final class CarPrototype extends AbstractGearPrototype {
     private static final HotKey[] F_KEYS = { HotKey.F1, HotKey.F2, HotKey.F3, HotKey.F4, HotKey.F5, HotKey.F6 };
+    private static final Expression GEARS = new Expression(Variable.GEAR.getVar());
+    private static final Expression STOPS = new Expression(Variable.STOPS.getVar());
+    private static final String PREV_GEAR = "previousGear";
+    private static final String PREV_STOPS = "previousStops";
 
     static PrototypeDefinition buildPrototype() {
         Traits traits = new Traits();
+
+        traits.addTrait(new GlobalProp("Set Current Gear", new Expression(Variable.CURRENT_GEAR.getVarName()),
+                new Expression(Variable.CAR.getVarName(), true), 0, 6, //
+                new DynamicPropertyTrigger(null, HotKey.CTRL_A, DynPropTriggerType.SET_VALUE, GEARS), //
+                new DynamicPropertyTrigger(null, HotKey.CTRL_Z, DynPropTriggerType.SET_VALUE, GEARS), //
+                new DynamicPropertyTrigger(null, CustomHotKey.GEAR_0, DynPropTriggerType.SET_VALUE, GEARS), //
+                new DynamicPropertyTrigger(null, CustomHotKey.GEAR_1, DynPropTriggerType.SET_VALUE, GEARS), //
+                new DynamicPropertyTrigger(null, CustomHotKey.GEAR_2, DynPropTriggerType.SET_VALUE, GEARS), //
+                new DynamicPropertyTrigger(null, CustomHotKey.GEAR_3, DynPropTriggerType.SET_VALUE, GEARS), //
+                new DynamicPropertyTrigger(null, CustomHotKey.GEAR_4, DynPropTriggerType.SET_VALUE, GEARS), //
+                new DynamicPropertyTrigger(null, CustomHotKey.GEAR_5, DynPropTriggerType.SET_VALUE, GEARS), //
+                new DynamicPropertyTrigger(null, CustomHotKey.GEAR_6, DynPropTriggerType.SET_VALUE, GEARS) //
+        ));
+
+        traits.addTrait(new GlobalProp("Set Current Stops", new Expression(Variable.CURRENT_STOPS.getVarName()),
+                new Expression(Variable.CAR.getVarName(), true), 0, 6, //
+                new DynamicPropertyTrigger(null, HotKey.CTRL_S, DynPropTriggerType.SET_VALUE, STOPS), //
+                new DynamicPropertyTrigger(null, HotKey.CTRL_X, DynPropTriggerType.SET_VALUE, STOPS), //
+                new DynamicPropertyTrigger(null, HotKey.CTRL_C, DynPropTriggerType.SET_VALUE, STOPS) //
+        ));
+        
+        traits.addTrait(new CalculatedProp(PREV_GEAR, new Expression(getGlobalProp(Variable.CURRENT_GEAR), true)));
+        traits.addTrait(new CalculatedProp(PREV_STOPS, new Expression(getGlobalProp(Variable.CURRENT_STOPS), true)));
         traits.addTrait(getCarGearTrigger(6));
         traits.addTrait(getCarGearTrigger(5));
         traits.addTrait(getCarGearTrigger(4));
@@ -82,31 +112,34 @@ final class CarPrototype extends AbstractGearPrototype {
                 SystemProperty.CURRENT_MAP.getVarName() + "=" + Variable.CAR + " && " + Prototype.DASH_GEARS + "=true");
         traits.addTrait(new GlobalKey("DecGear", null, HotKey.CTRL_Z, CustomHotKey.DECREASE_GEAR, isCarGears, true));
         traits.addTrait(new GlobalKey("IncGear", null, HotKey.CTRL_A, CustomHotKey.INCREASE_GEAR, isCarGears, true));
-
-        traits.addTrait(new DynamicProp(Variable.STOPS, 0, 0, 4, false,
-                new DynamicPropertyTrigger("Corner Stops [+1]", HotKey.CTRL_S, DynPropTriggerType.INCREMENT, 1),
-                new DynamicPropertyTrigger("Corner Stops [-1]", HotKey.CTRL_X, DynPropTriggerType.INCREMENT, -1),
-                new DynamicPropertyTrigger("Corner Stops [Reset]", HotKey.CTRL_C, DynPropTriggerType.SET_VALUE, 0)));
-
+        
         traits.addTrait(new DynamicProp(Variable.GEAR, 1, 0, 6, false,
                 new DynamicPropertyTrigger("Gear [Up]", HotKey.CTRL_A, DynPropTriggerType.INCREMENT, 1),
                 new DynamicPropertyTrigger("Gear [Down]", HotKey.CTRL_Z, DynPropTriggerType.INCREMENT, -1),
                 getGearTrigger(0), getGearTrigger(1), getGearTrigger(2), getGearTrigger(3), getGearTrigger(4),
                 getGearTrigger(5), getGearTrigger(6)));
+        
+        traits.addTrait(new MenuSeparator("Stops separator"));
+        traits.addTrait(new DynamicProp(Variable.STOPS, 0, 0, 4, false,
+                new DynamicPropertyTrigger("Corner Stops [+1]", HotKey.CTRL_S, DynPropTriggerType.INCREMENT, 1),
+                new DynamicPropertyTrigger("Corner Stops [-1]", HotKey.CTRL_X, DynPropTriggerType.INCREMENT, -1),
+                new DynamicPropertyTrigger("Corner Stops [Reset]", HotKey.CTRL_C, DynPropTriggerType.SET_VALUE, 0)));
 
         traits.addTrait(new NoStack(NoStackType.NORMALLY));
         traits.addTrait(new Marker(Variable.LAYER.getVarName(), Variable.CAR.getVarName()));
 
         traits.addTrait(new Report("Erase Move Path",
                 PLAYER_CHAT + "erases movement path on " + SystemProperty.BASIC_PIECE.getVar(), HotKey.CTRL_T));
-        traits.addTrait(
-                new Report("Change Stops", PLAYER_CHAT + " changes stops on " + SystemProperty.FULL_PIECE.getNewVar()
-                        + " from " + Variable.STOPS.getOldVar(), HotKey.CTRL_S, HotKey.CTRL_X, HotKey.CTRL_C));
-        traits.addTrait(new Report("Change Gear", PLAYER_CHAT + "selects gear " + Variable.GEAR.getVar() + " on " + //
-                SystemProperty.BASIC_PIECE.getVar() + " from gear " + Variable.GEAR.getOldVar(), HotKey.CTRL_A,
-                HotKey.CTRL_Z, CustomHotKey.GEAR_0, CustomHotKey.GEAR_1, CustomHotKey.GEAR_2, CustomHotKey.GEAR_3,
-                CustomHotKey.GEAR_4, CustomHotKey.GEAR_5, CustomHotKey.GEAR_6));
 
+        traits.addTrait(new Report("Change Stops", PLAYER_CHAT + " sets stop to " + Variable.STOPS + " on " + //
+                SystemProperty.BASIC_PIECE.getVar() + " from $" + PREV_STOPS + '$', HotKey.CTRL_S, HotKey.CTRL_X,
+                HotKey.CTRL_C));
+        traits.addTrait(new Report("Change Gear", PLAYER_CHAT + "selects gear " + Variable.GEAR + " on " + //
+                SystemProperty.BASIC_PIECE.getVar() + " from gear $" + PREV_GEAR + '$', HotKey.CTRL_A, HotKey.CTRL_Z,
+                CustomHotKey.GEAR_0, CustomHotKey.GEAR_1, CustomHotKey.GEAR_2, CustomHotKey.GEAR_3, CustomHotKey.GEAR_4,
+                CustomHotKey.GEAR_5, CustomHotKey.GEAR_6));
+
+        traits.addTrait(new MenuSeparator("Rotate separator"));
         traits.addTrait(new Rotate("Rotate", 36, HotKey.CTRL_W, "Rotate CW", HotKey.CTRL_Q, "Rotate CCW", 0));
         traits.addTrait(new TriggerAction("Rotate CCW 90", "Rotate CCW 90˚", HotKey.CTRL_SHIFT_Q, null,
                 Collections.singletonList(HotKey.CTRL_SHIFT_Q), Collections.singletonList(HotKey.CTRL_Q), 9, null,
@@ -115,6 +148,7 @@ final class CarPrototype extends AbstractGearPrototype {
                 Collections.singletonList(HotKey.CTRL_SHIFT_W), Collections.singletonList(HotKey.CTRL_W), 9, null,
                 null));
 
+        traits.addTrait(new MenuSeparator("Test separator"));
         traits.addTrait(
                 new Report("Close test", "You shit your pants, but the car is fine...", CustomHotKey.CLOSE_TEST));
         traits.addTrait(new Report("Near test", "Oof... that was close!", CustomHotKey.NEAR_TEST));
@@ -128,6 +162,12 @@ final class CarPrototype extends AbstractGearPrototype {
                     PLAYER_CHAT + "is testing " + r.label + " for " + SystemProperty.BASIC_PIECE.getVar(),
                     r.reportCommand));
         });
+
+        traits.addTrait(new MenuSeparator("Delete separator"));
+        traits.addTrait(new Delete());
+        traits.addTrait(new PrototypeRef(Prototype.CHECK_ENGINE));
+        traits.addTrait(new PrototypeRef(Prototype.CHECK_COLLISION));
+        traits.addTrait(new PrototypeRef(Prototype.CHECK_HAZARD));
 
         LayerBuilder cornerBuilder = new LayerBuilder("Corner Stops");
         cornerBuilder.followExpression(new Expression(Variable.STOPS.getVarName()), 0);
@@ -144,11 +184,7 @@ final class CarPrototype extends AbstractGearPrototype {
         gearBuilder.decreaseLevel("Gear [Down]", HotKey.CTRL_Z);
         IntStream.range(0, 7).forEach(i -> gearBuilder.addLevel(i + "a_Marcia.png", " Gear " + i, true));
         traits.addTrait(gearBuilder.build(2));
-
-        traits.addTrait(new Delete());
-        traits.addTrait(new PrototypeRef(Prototype.CHECK_ENGINE));
-        traits.addTrait(new PrototypeRef(Prototype.CHECK_COLLISION));
-        traits.addTrait(new PrototypeRef(Prototype.CHECK_HAZARD));
+        
         return new PrototypeDefinition(Prototype.CAR, traits);
     }
 
@@ -161,6 +197,10 @@ final class CarPrototype extends AbstractGearPrototype {
 
     protected static GlobalHotKey getCarGearGlobalHotKey(int gear) {
         return new GlobalHotKey("Roll Gear " + gear, null, CustomHotKey.DO_ROLLS[gear - 1], F_KEYS[gear - 1]);
+    }
+
+    private static String getGlobalProp(Variable variable) {
+        return "GetMapProperty(\"" + variable.getVarName() + "\"," + Variable.CAR.getVarName() + ")";
     }
 
     private static final List<BreakingRes> BREAKING_RESOURCES = Arrays.asList(//

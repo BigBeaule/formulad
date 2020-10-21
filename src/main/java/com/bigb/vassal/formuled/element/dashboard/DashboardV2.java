@@ -47,22 +47,26 @@ public class DashboardV2 extends AbstractDashboard {
 
         for (int i = 0; i < CarResource.CAR_RESOURCE_V2.size(); i++) {
             CarResource resource = CarResource.CAR_RESOURCE_V2.get(i);
+            Prototype dashBoxProto = Prototype.DASH_BOX;
 
             switch (resource) {
             case TIRE:
                 widgets.add(getClearTiresButton(team, carNumber));
                 widgets.add(getCarResourceSetup(Prototype.SETUP_BOX_TIRES, resource, team, carNumber, 64, 125));
-                IntStream.range(0, 12).forEach(index -> widgets.add(getCarResource(resource, team, carNumber,
-                        (index + 1), 65 + (index % 4 * 45), 175 + (index / 4 * 51))));
+                IntStream.range(0, 12).forEach(index -> widgets.add(getCarResource(Prototype.DASH_BOX, resource, team,
+                        carNumber, (index + 1), 65 + (index % 4 * 45), 175 + (index / 4 * 51))));
                 continue;
             case ENGINE:
                 widgets.add(getCarResourceCheck(CustomHotKey.TEST_ENGINE, resource, team, carNumber, 402));
+                dashBoxProto = Prototype.DASH_BOX_RESOURCE;
                 break;
             case BODY:
                 widgets.add(getCarResourceCheck(CustomHotKey.TEST_COLLISION, resource, team, carNumber, 468));
+                dashBoxProto = Prototype.DASH_BOX_RESOURCE;
                 break;
             case HOLDING:
                 widgets.add(getCarResourceCheck(CustomHotKey.TEST_HAZARD, resource, team, carNumber, 531));
+                dashBoxProto = Prototype.DASH_BOX_RESOURCE;
                 break;
             default:
                 break;
@@ -70,7 +74,7 @@ public class DashboardV2 extends AbstractDashboard {
 
             widgets.add(getCarResourceSetup(resource, team, carNumber, i));
             for (int j = 1; j <= 6; j++) {
-                widgets.add(getCarResource(resource, team, carNumber, j, i));
+                widgets.add(getCarResource(dashBoxProto, resource, team, carNumber, j, i));
             }
         }
 
@@ -90,8 +94,10 @@ public class DashboardV2 extends AbstractDashboard {
         return getPitStop(lap, 62 + (lap * 46), 515);
     }
 
-    private SetupStack getCarResource(CarResource resource, Team team, int carNumber, int index, int resourceOrdinal) {
-        return getCarResource(resource, team, carNumber, index, 275 + (int) (resourceOrdinal * 64.5),
+    private SetupStack getCarResource(Prototype dashBoxProto, CarResource resource, Team team, int carNumber, int index,
+            int resourceOrdinal) {
+        
+        return getCarResource(dashBoxProto, resource, team, carNumber, index, 275 + (int) (resourceOrdinal * 64.5),
                 231 + (index * 52));
     }
 
@@ -99,7 +105,7 @@ public class DashboardV2 extends AbstractDashboard {
         return getCarResourceSetup(Prototype.SETUP_BOX, resource, team, carNumber, 275 + (int) (resourceOrdinal * 64.5),
                 182);
     }
-    
+
     private SetupStack getClearTiresButton(Team team, int carNumber) {
         String name = "Clear Used Tires";
         Traits traits = new Traits(getNextId(), "clear.png", name);
